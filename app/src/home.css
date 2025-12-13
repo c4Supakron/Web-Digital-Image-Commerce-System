@@ -1,0 +1,292 @@
+/* =========================================
+   HOME PAGE STYLES
+   ========================================= */
+
+/* --- Container --- */
+.home-container {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* --- Navbar --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: #ffffff;
+    border-bottom: 1px solid #eaeaea;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.menu-btn:hover { transform: scale(1.1); }
+
+.nav-center {
+    flex: 1;
+    max-width: 500px;
+    margin: 0 20px;
+}
+
+.search-bar {
+    position: relative;
+    width: 100%;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px 40px 10px 20px;
+    border: 1px solid #1a1a1a;
+    border-radius: 25px;
+    outline: none;
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    cursor: pointer;
+}
+
+.nav-link-text {
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    color: #1a1a1a;
+}
+.nav-icon { cursor: pointer; }
+
+/* --- Sidebar (Menu) --- */
+.sidebar-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 150;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+.sidebar-overlay.open { opacity: 1; pointer-events: auto; }
+
+.sidebar {
+    position: fixed;
+    top: 0; left: -300px; /* ซ่อนไว้ทางซ้าย */
+    width: 300px;
+    height: 100%;
+    background: #ffffff;
+    z-index: 200;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    transition: left 0.3s ease-in-out;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.open { left: 0; }
+
+.close-btn {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 40px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.sidebar-menu li { margin-bottom: 25px; }
+
+.sidebar-menu a {
+    text-decoration: none;
+    color: #1a1a1a;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+}
+.sidebar-menu a:hover { color: #8b5cf6; }
+
+.special-menu a { font-weight: 700; color: #000; }
+
+
+/* --- Hero Slider --- */
+.hero-slider {
+    width: 100%;
+    height: 500px; /* ความสูงของ Slider */
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 50px;
+}
+
+.slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out; /* ภาพค่อยๆ จาง */
+}
+
+.slide.active { opacity: 1; }
+
+.slide-content {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+}
+.slide-content h2 { font-size: 3rem; }
+
+.dots-container {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+.dot {
+    width: 10px; height: 10px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 50%;
+    cursor: pointer;
+}
+.dot.active { background: #fff; transform: scale(1.2); }
+
+/* --- Featured Section --- */
+.featured-section {
+    padding: 20px 60px;
+    margin-bottom: 80px;
+}
+
+.section-title {
+    font-size: 24px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    font-weight: 800;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 30px;
+}
+
+.product-card {
+    text-align: center;
+}
+
+.product-img-wrapper {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 15px;
+    height: 280px; /* fix ความสูงรูป */
+}
+
+.product-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+.product-card:hover img { transform: scale(1.05); }
+
+.wishlist-btn {
+    position: absolute;
+    top: 10px; right: 10px;
+    background: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.product-card:hover .wishlist-btn { opacity: 1; }
+
+.product-info h3 { font-size: 16px; margin: 5px 0; font-weight: 600; }
+.product-info p { font-size: 14px; color: #666; margin-bottom: 10px; }
+
+.add-to-cart-btn {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 0.2s;
+}
+.add-to-cart-btn:hover { background: #333; }
+
+/* --- About Section (Dark) --- */
+.about-section {
+    background: #000;
+    color: #fff;
+    padding: 60px;
+}
+
+.about-content {
+    display: flex;
+    gap: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.about-text { flex: 1; }
+.about-text h2, .about-text h3 { margin-bottom: 15px; color: #fff; }
+.about-text p { color: #ccc; line-height: 1.6; font-size: 14px; }
+
+.about-image { flex: 1; }
+.about-image img { width: 100%; border-radius: 4px; }
+
+/* Footer */
+.simple-footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: #999;
+}
+
+/* Responsive มือถือ */
+@media (max-width: 768px) {
+    .nav-center { display: none; } /* ซ่อนช่องค้นหาในมือถือ */
+    .about-content { flex-direction: column; }
+    .hero-slider { height: 300px; }
+    .featured-section { padding: 20px; }
+}
