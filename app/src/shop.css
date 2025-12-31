@@ -1,0 +1,286 @@
+/* =========================================
+   SHOP PAGE STYLES (Refined Design)
+   ========================================= */
+
+.shop-container {
+    background-color: #ffffff;
+    min-height: 100vh;
+}
+
+/* --- Layout หลัก --- */
+.shop-layout {
+    display: flex;
+    max-width: 1300px; /* จำกัดความกว้างไม่ให้เกินไป */
+    margin: 0 auto;
+    padding: 40px 20px;
+    gap: 50px; /* ระยะห่างระหว่าง Sidebar กับ Main */
+    align-items: flex-start;
+}
+
+/* =========================================
+   SIDEBAR (ซ้าย)
+   ========================================= */
+.shop-sidebar {
+    width: 260px; /* ความกว้างตายตัว */
+    flex-shrink: 0; /* ไม่ให้หดตัว */
+    position: sticky;
+    top: 90px; /* ทำให้ Sidebar ลอยตามเมื่อเลื่อนหน้าจอ (ถ้ารองรับ) */
+}
+
+.sidebar-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+    padding-bottom: 15px;
+    
+    /* --- ส่วนที่ต้องเพิ่ม/แก้ไข --- */
+    color: #000000; /* บังคับให้เป็นสีดำสนิท */
+    border-bottom: 3px solid #000000; /* เส้นขีดเส้นใต้สีดำ */
+    /* ------------------------ */
+    
+    display: inline-block;
+}
+
+.filter-group h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    
+    /* --- บังคับสีดำตรงนี้ด้วย --- */
+    color: #000000; 
+    /* ----------------------- */
+}
+
+.filter-group h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    color: #000;
+}
+
+.filter-group ul {
+    list-style: none;
+    padding: 0;
+}
+
+.filter-group li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 0.95rem;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.2s;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.filter-group li:hover {
+    color: #000;
+    font-weight: 600;
+}
+
+.filter-group .count {
+    color: #999;
+    font-size: 0.9rem;
+}
+
+/* =========================================
+   MAIN CONTENT & PRODUCT GRID (ขวา)
+   ========================================= */
+.shop-main {
+    flex: 1; /* ขยายเต็มพื้นที่ที่เหลือ */
+}
+
+.product-grid {
+    display: grid;
+    /* สร้าง Grid อัตโนมัติ ขั้นต่ำ 260px ต่อการ์ด */
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 40px 30px; /* ระยะห่าง แนวตั้ง แนวนอน */
+    margin-bottom: 60px;
+}
+
+/* --- Design ของการ์ดสินค้า --- */
+.shop-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    transition: transform 0.3s ease;
+}
+/* เมื่อชี้การ์ด ให้ลอยขึ้นนิดหน่อย */
+.shop-card:hover {
+    transform: translateY(-5px);
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    /* กำหนดอัตราส่วนภาพเป็น 4:5 (แนวตั้งสวยๆ สำหรับงานศิลป์) */
+    aspect-ratio: 4 / 5; 
+    overflow: hidden;
+    background-color: #f0f0f0;
+    margin-bottom: 15px;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+/* เมื่อชี้การ์ด ให้ภาพซูมเข้า */
+.shop-card:hover .image-container img {
+    transform: scale(1.08);
+}
+
+.card-heart-btn {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: rgba(255,255,255,0.8);
+    border: none;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.shop-card:hover .card-heart-btn { opacity: 1; }
+
+.card-details {
+    text-align: left;
+    padding: 0 5px;
+}
+
+.product-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #1a1a1a;
+    white-space: nowrap; /* ไม่ให้ชื่อยาวเกิน */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.price-block {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.price-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.price-value {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #000;
+}
+
+/* ปุ่ม ADD TO CART สีดำ */
+.add-to-cart-black {
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.add-to-cart-black:hover {
+    background-color: #333;
+}
+
+/* =========================================
+   PAGINATION (ด้านล่าง)
+   ========================================= */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+}
+
+.page-box {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #e0e0e0;
+    background: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.page-box:hover:not(.disabled) {
+    border-color: #000;
+    color: #000;
+}
+
+.page-box.active {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+}
+
+.page-box.disabled {
+    color: #ccc;
+    border-color: #f0f0f0;
+    cursor: not-allowed;
+}
+
+.page-dots {
+    font-size: 1.2rem;
+    color: #999;
+    margin: 0 5px;
+}
+
+/* =========================================
+   RESPONSIVE (สำหรับมือถือ)
+   ========================================= */
+@media (max-width: 900px) {
+    .shop-layout {
+        flex-direction: column; /* เรียงแนวตั้งแทน */
+    }
+    
+    .shop-sidebar {
+        width: 100%; /* เต็มความกว้าง */
+        margin-bottom: 40px;
+        position: static; /* ไม่ต้องลอยแล้ว */
+    }
+    
+    .product-grid {
+        /* ในมือถือให้แสดง 2 คอลัมน์ ถ้าจอเล็กมากเหลือ 1 */
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 20px;
+    }
+    
+    .sidebar-title {
+        font-size: 2rem;
+        border-bottom-width: 2px;
+    }
+}

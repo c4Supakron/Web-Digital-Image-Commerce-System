@@ -59,9 +59,15 @@
 .search-bar input {
     width: 100%;
     padding: 10px 40px 10px 20px;
-    border: 1px solid #1a1a1a;
+    border: 1px solid #000000;
     border-radius: 25px;
     outline: none;
+
+    background-color: #ffffff; 
+    /* -------------------------------------- */
+    
+    color: #000000; /* สีตัวหนังสือสีดำ */
+    transition: box-shadow 0.2s;
 }
 
 .search-icon {

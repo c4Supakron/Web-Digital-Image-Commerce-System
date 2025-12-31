@@ -1,0 +1,132 @@
+/* =========================================
+   PROFILE PAGE STYLES V2 (Grid Layout)
+   ========================================= */
+
+.profile-container-v2 {
+    background-color: #ffffff;
+    min-height: 100vh;
+}
+
+.profile-content-v2 {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 30px;
+}
+
+/* หัวข้อและเส้นขีด */
+.profile-heading {
+    font-size: 2rem;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.profile-divider {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin-bottom: 40px;
+}
+
+/* --- Form Grid Layout --- */
+.profile-grid-form {
+    display: grid;
+    /* แบ่งเป็น 2 คอลัมน์: คอลัมน์แรกกว้าง 200px (สำหรับ Label), คอลัมน์สองยืดเต็มที่ */
+    grid-template-columns: 220px 1fr;
+    gap: 25px; /* ระยะห่างระหว่างแถวและคอลัมน์ */
+    align-items: center; /* จัดให้ Label อยู่กึ่งกลางแนวตั้งกับ Input */
+}
+
+/* สไตล์ของ Label */
+.profile-label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    text-align: left;
+}
+/* สำหรับ Label ของ Address ที่ต้องการให้อยู่ชิดด้านบน */
+.profile-label.top-aligned {
+    align-self: flex-start;
+    margin-top: 10px;
+}
+
+/* สไตล์ของช่อง Input ทั่วไป (กรอบสี่เหลี่ยม) */
+.profile-input-box {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ccc; /* ขอบสีเทาชัดเจน */
+    border-radius: 2px; /* มุมมนแกมเหลี่ยมเล็กน้อยตามภาพ */
+    font-size: 1rem;
+    color: #000;
+    background-color: #fff;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.profile-input-box:focus {
+    border-color: #000; /* คลิกแล้วขอบดำ */
+}
+
+/* สไตล์พิเศษ: ช่อง Phone (สั้นลง) */
+.profile-input-box.short {
+    width: 280px; /* กำหนดความกว้างตายตัว */
+    max-width: 100%;
+}
+
+/* สไตล์พิเศษ: ช่อง Address (สูงขึ้น) */
+textarea.profile-input-box.tall {
+    height: 120px;
+    resize: none;
+    font-family: inherit;
+}
+
+/* สไตล์พิเศษ: กล่อง Social */
+.profile-input-box.social-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #fff; /* พื้นหลังขาว */
+    /* ใช้ border เดียวกับ input-box */
+}
+
+.social-icon {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.social-icon:hover { transform: scale(1.1); }
+.social-icon.google { color: #DB4437; }
+.social-icon.facebook { color: #4267B2; }
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .profile-grid-form {
+        /* จอเล็กให้เรียงลงมาแทน */
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .profile-label {
+        margin-bottom: 5px;
+    }
+    .profile-input-box.short {
+        width: 100%; /* จอเล็กให้ช่องเบอร์โทรเต็มจอ */
+    }
+}
+อ
+
+/* สไตล์ปุ่มบันทึก (ใช้เหมือนหน้า Address) */
+.save-btn {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 12px 50px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+    transition: all 0.2s;
+}
+
+.save-btn:hover {
+    background-color: #357abd;
+    transform: translateY(-2px);
+}

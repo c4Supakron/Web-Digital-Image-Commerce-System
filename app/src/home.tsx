@@ -66,14 +66,19 @@ const HomePage: React.FC = () => {
         <button className="close-btn" onClick={() => setIsSidebarOpen(false)}>
           <X size={28} />
         </button>
-        <ul className="sidebar-menu">
-            <li><Link to="/">HOME</Link></li>
-            <li><Link to="/profile">Profile</Link></li>
-            <li><Link to="/address">Address</Link></li>
-            <li><Link to="/contact">CONTACT</Link></li>
-            <li><Link to="/orders">ORDER HISTORY</Link></li>
-            <li className="special-menu"><Link to="/join-artist">JOIN AS AN ARTIST</Link></li>
-        </ul>
+       <ul className="sidebar-menu">
+    <li><Link to="/">HOME</Link></li>
+    
+  
+    <li><Link to="/shop">SHOP</Link></li> 
+    {/* -------------------------------------- */}
+
+    <li><Link to="/profile">Profile</Link></li>
+    <li><Link to="/address">Address</Link></li>
+    <li><Link to="/contact">CONTACT</Link></li>
+    <li><Link to="/orders">ORDER HISTORY</Link></li>
+    <li className="special-menu"><Link to="/join-artist">JOIN AS AN ARTIST</Link></li>
+</ul>
       </div>
 
       {/* Hero Slider */}

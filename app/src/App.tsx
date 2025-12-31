@@ -4,6 +4,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './home.tsx'; 
 import LoginPage from './login.tsx';
 import RegisterPage from './register.tsx';
+import ShopPage from './shop.tsx';
+import AddressPage from './address.tsx';
+import ProfilePage from './profile.tsx';
+
 
 function App() {
   return (
@@ -19,6 +23,11 @@ function App() {
         
         <Route path="/register" element={<RegisterPage />} />
         
+        <Route path="/shop" element={<ShopPage />} />
+
+        <Route path="/address" element={<AddressPage />} />
+
+         <Route path="/profile" element={<ProfilePage />} />
         {/* ------------------------------- */}
       </Routes>
     </BrowserRouter>
