@@ -1,0 +1,300 @@
+/* Reset พื้นฐาน */
+/* --- Home Button Styles --- */
+.home-link {
+    position: absolute; /* ลอยอิสระจากองค์ประกอบอื่น */
+    top: 40px;          /* ห่างจากขอบบน */
+    left: 50px;         /* ห่างจากขอบซ้าย (ถ้าอยากได้ขวา ให้เปลี่ยนเป็น right: 50px;) */
+    
+    font-size: 24px;    /* ตัวใหญ่ๆ */
+    font-weight: 800;   /* ตัวหนา */
+    color: #1e293b;     /* สีเข้ม */
+    text-decoration: none; /* เอาขีดเส้นใต้ออก */
+    
+    display: flex;
+    align-items: center;
+    gap: 10px;          /* ระยะห่างระหว่างไอคอนกับตัวหนังสือ */
+    
+    z-index: 20;        /* ให้อยู่บนสุด ไม่โดนอะไรบัง */
+    transition: all 0.3s ease;
+}
+
+.home-link:hover {
+    color: #3b82f6;     /* ชี้แล้วเปลี่ยนเป็นสีฟ้า */
+    transform: translateX(-5px); /* ขยับซ้ายนิดๆ ให้รู้ว่ากดได้ */
+}
+
+/* ปรับให้เล็กลงหน่อยในจอมือถือ */
+@media (max-width: 600px) {
+    .home-link {
+        top: 20px;
+        left: 20px;
+        font-size: 18px;
+    }
+}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif; /* ฟอนต์มาตรฐานที่อ่านง่าย */
+}
+
+html, body, #root {
+    height: 100%;
+    width: 100%;
+}
+
+/* --- Layout หลัก --- */
+.clean-layout {
+    min-height: 100vh;
+    width: 100%;
+    background-color: #f3f4f6; /* สีเทาอ่อนๆ สบายตา (ไม่ขาวจั๊วะ) */
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+}
+
+/* --- ลูกเล่นแสงจางๆ (Soft Glow) --- */
+.soft-glow-1 {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.08), transparent 70%); /* ฟ้าจางมาก */
+    border-radius: 50%;
+    pointer-events: none;
+}
+.soft-glow-2 {
+    position: absolute;
+    bottom: -10%;
+    right: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.08), transparent 70%); /* ม่วงจางมาก */
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* --- Card --- */
+.clean-card {
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    /* เงานุ่มๆ ให้ดูลอยขึ้นมา */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 
+                0 10px 15px -3px rgba(0, 0, 0, 0.05); 
+    z-index: 10;
+}
+
+/* --- Typography --- */
+.clean-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.clean-header h1 {
+    font-size: 26px;
+    color: #1e293b; /* สีดำเทาเข้ม */
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.clean-header p {
+    color: #64748b; /* สีเทากลาง */
+    font-size: 14px;
+}
+
+/* --- Inputs --- */
+.clean-input-group {
+    margin-bottom: 18px;
+}
+.clean-input-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #334155;
+    margin-bottom: 6px;
+}
+.input-wrapper {
+    position: relative;
+}
+.input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+.clean-form input {
+    width: 100%;
+    padding: 12px 16px 12px 42px; /* เว้นที่ให้ไอคอน */
+    border: 1px solid #e2e8f0; /* ขอบสีเทาอ่อน */
+    background-color: #f8fafc; /* พื้นหลัง Input สีเกือบขาว */
+    border-radius: 10px;
+    font-size: 14px;
+    color: #1e293b;
+    transition: all 0.2s;
+}
+.clean-form input:focus {
+    outline: none;
+    background-color: #fff;
+    border-color: #3b82f6; /* สีฟ้าเมื่อพิมพ์ */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* --- Checkbox & Options (แก้ไขใหม่) --- */
+.clean-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+.clean-options a {
+    font-size: 13px;
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* Checkbox Container: ใช้ Flex จัดให้ตรงกัน */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 13px;
+    color: #475569;
+    user-select: none;
+}
+
+/* ซ่อน Checkbox เดิม แต่ยังให้มีอยู่เพื่อให้ Form ทำงาน */
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* สร้างกล่องสี่เหลี่ยมใหม่ */
+.custom-checkmark {
+    height: 18px;
+    width: 18px;
+    background-color: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 5px;
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+/* เมื่อติ๊กถูก: เปลี่ยนสีพื้นหลังและขอบ */
+.checkbox-container input:checked ~ .custom-checkmark {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+}
+
+/* สร้างเครื่องหมายถูกข้างใน */
+.custom-checkmark:after {
+    content: "";
+    display: none;
+    width: 5px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) translate(-1px, -1px);
+}
+
+/* แสดงเครื่องหมายถูกเมื่อ Input ถูกติ๊ก */
+.checkbox-container input:checked ~ .custom-checkmark:after {
+    display: block;
+}
+
+/* --- Buttons --- */
+.clean-btn-primary {
+    width: 100%;
+    padding: 12px;
+    background-color: #3b82f6; /* สีฟ้าหลัก */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+.clean-btn-primary:hover {
+    background-color: #2563eb;
+}
+
+/* --- Divider --- */
+.clean-divider {
+    text-align: center;
+    margin: 24px 0;
+    position: relative;
+}
+.clean-divider:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #e2e8f0;
+}
+.clean-divider span {
+    background: #fff;
+    padding: 0 10px;
+    color: #94a3b8;
+    font-size: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+/* --- Social Buttons --- */
+.social-buttons {
+    display: flex;
+    gap: 12px;
+}
+.social-btn {
+    flex: 1;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #334155;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+.social-btn:hover {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
+}
+.google-icon { color: #ea4335; }
+.fb-icon { color: #1877f2; }
+
+/* --- Footer --- */
+.clean-footer {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 14px;
+    color: #64748b;
+}
+.clean-footer a {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 600;
+}

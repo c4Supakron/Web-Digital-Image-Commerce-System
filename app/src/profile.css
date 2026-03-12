@@ -1,0 +1,137 @@
+/* โครงสร้างหลัก ใช้ร่วมกับ Navbar ปกติ */
+.form-container {
+  max-width: 700px;
+  margin: 60px auto;
+  padding: 40px;
+  background: #ffffff;
+}
+
+.form-header {
+  margin-bottom: 40px;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 20px;
+}
+
+.form-header h2 {
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #111;
+}
+
+.form-header p {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* การจัดฟอร์มให้ดูไม่อึดอัด */
+.spacious-form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px; /* เพิ่มระยะห่างระหว่างแต่ละช่อง */
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.form-row .input-group {
+  flex: 1; /* แบ่งครึ่งเท่าๆ กัน */
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-group label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.spacious-form input,
+.spacious-form textarea {
+  padding: 14px 18px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fafafa;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s;
+  outline: none;
+}
+
+.spacious-form input:focus,
+.spacious-form textarea:focus {
+  background-color: #fff;
+  border-color: #000;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+}
+
+.social-connect {
+  display: flex;
+  gap: 15px;
+}
+
+.social-btn-outline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.social-btn-outline:hover {
+  background: #f5f5f5;
+  border-color: #bbb;
+}
+
+.form-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-save {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-save:hover {
+  background-color: #333;
+}
+
+/* =========================================
+   แก้ไขปัญหาสีแถบเมนูซ้ายบนเพี้ยนเป็นสีดำ
+   ========================================= */
+.clean-navbar {
+  background-color: #ffffff !important;
+}
+
+.clean-navbar .nav-left {
+  background-color: transparent !important;
+  padding: 0 !important;
+}
+
+.clean-navbar .brand-logo {
+  color: #000000 !important; /* บังคับให้โลโก้ V-ART เป็นสีดำ */
+}
+
+.menu-btn {
+  background-color: transparent !important;
+}

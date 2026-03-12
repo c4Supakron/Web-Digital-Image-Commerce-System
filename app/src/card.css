@@ -1,0 +1,255 @@
+.cart-wrapper {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 5%;
+  min-height: 70vh;
+}
+
+.cart-header {
+  margin-bottom: 40px;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 20px;
+}
+
+.cart-header h2 {
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.cart-header p {
+  color: #666;
+}
+
+/* LAYOUT ตะกร้า */
+.cart-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 50px;
+}
+
+.cart-item-card {
+  display: flex;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.cart-item-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.cart-item-details {
+  flex: 1;
+}
+
+.item-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 5px;
+}
+
+.item-title-row h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.btn-remove {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.btn-remove:hover { color: #ff4d4f; }
+
+.item-artist {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0 0 15px 0;
+}
+
+.item-price {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* สรุปคำสั่งซื้อ */
+.cart-summary-section {
+  background: #fafafa;
+  padding: 30px;
+  border-radius: 8px;
+  height: fit-content;
+}
+
+.cart-summary-section h3 {
+  margin: 0 0 25px 0;
+  font-weight: 500;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  color: #555;
+}
+
+.summary-divider {
+  border: 0;
+  border-top: 1px solid #ddd;
+  margin: 20px 0;
+}
+
+.summary-row.total {
+  font-weight: 600;
+  color: #000;
+  font-size: 1.2rem;
+}
+
+.btn-checkout {
+  width: 100%;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 30px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background 0.3s;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.btn-checkout:hover { background: #333; }
+
+/* หน้า QR Code (Payment) */
+.payment-section, .success-section {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.btn-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+.btn-back:hover { color: #000; }
+
+.payment-card {
+  border: 1px solid #eaeaea;
+  padding: 40px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.qr-code-box {
+  width: 200px;
+  height: 200px;
+  margin: 20px auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.qr-code-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.qr-instruction {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.upload-slip-box {
+  margin-bottom: 30px;
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 30px;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.2s;
+}
+
+.upload-label:hover {
+  border-color: #000;
+  color: #000;
+  background: #fafafa;
+}
+
+/* หน้าสำเร็จ (Success) */
+.success-section {
+  padding: 60px 0;
+}
+
+.success-section h2 {
+  font-size: 2rem;
+  margin: 20px 0 10px;
+}
+
+.success-section p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.success-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.btn-outline-black {
+  display: inline-block;
+  padding: 16px;
+  border: 1px solid #000;
+  color: #000;
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: 30px;
+  transition: all 0.3s;
+}
+
+.btn-outline-black:hover {
+  background: #fafafa;
+}
+
+.empty-cart {
+  text-align: center;
+  padding: 80px 0;
+  color: #666;
+}
+
+.empty-cart p {
+  margin: 20px 0 30px;
+  font-size: 1.1rem;
+}

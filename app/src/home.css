@@ -1,0 +1,271 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+.clean-page {
+  font-family: 'Inter', sans-serif;
+  background-color: #ffffff;
+  color: #111;
+  min-height: 100vh;
+}
+
+/* =========================================
+   NAVBAR (แถบด้านบน)
+   ========================================= */
+.clean-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 5%;
+  border-bottom: 1px solid #eaeaea;
+  background-color: #fff;
+}
+
+.brand-logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-decoration: none;
+  color: #000;
+}
+
+.nav-icons {
+  display: flex;
+  gap: 25px;
+}
+
+.nav-icons a {
+  color: #333;
+  transition: color 0.3s;
+}
+
+.nav-icons a:hover {
+  color: #a0a0a0;
+}
+
+/* =========================================
+   SIDEBAR MENU (เมนูด้านซ้าย)
+   ========================================= */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  z-index: 998;
+}
+
+.sidebar-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 280px;
+  height: 100vh;
+  background: #fff;
+  z-index: 999;
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 80px 30px;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  margin-bottom: 25px;
+}
+
+.sidebar-menu a {
+  text-decoration: none;
+  color: #000;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  transition: color 0.3s;
+}
+
+.sidebar-menu a:hover {
+  color: #666;
+}
+
+.special-menu a {
+  color: #ff4500;
+  font-weight: 600;
+}
+
+/* =========================================
+   HERO SECTION (แบนเนอร์ใหญ่)
+   ========================================= */
+.hero-section {
+  height: 70vh;
+  background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1547891654-e66ed7ebb968?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  font-weight: 300;
+}
+
+.btn-explore {
+  background: #fff;
+  color: #000;
+  padding: 15px 40px;
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: 30px;
+  transition: all 0.3s;
+  display: inline-block;
+}
+
+.btn-explore:hover {
+  background: #000;
+  color: #fff;
+}
+
+/* =========================================
+   FEATURED ARTWORKS (แกลเลอรี)
+   ========================================= */
+.featured-section {
+  padding: 80px 5%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 400;
+  margin-bottom: 50px;
+}
+
+.art-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 40px;
+}
+
+.art-image-box {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 15px;
+  background: #f9f9f9;
+}
+
+.art-image-box img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.art-item:hover .art-image-box img {
+  transform: scale(1.03);
+}
+
+.art-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  background: linear-gradient(transparent, rgba(0,0,0,0.5));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.art-item:hover .art-overlay {
+  opacity: 1;
+}
+
+.btn-icon {
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #000;
+}
+
+.btn-icon:hover { background: #f0f0f0; }
+
+.btn-add-cart {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-add-cart:hover { background: #333; }
+
+.art-text h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 0 5px 0;
+}
+
+.art-text p {
+  color: #666;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+.simple-footer {
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid #eaeaea;
+  color: #777;
+  font-size: 0.9rem;
+}

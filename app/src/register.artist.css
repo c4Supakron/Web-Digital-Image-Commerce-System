@@ -1,0 +1,203 @@
+/* =========================================
+   ไฟล์ register-artist.css (สไตล์สำหรับศิลปิน)
+   ========================================= */
+
+/* ตั้งค่าพื้นหลังและเลย์เอาต์หลัก */
+.clean-layout {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0f172a; /* พื้นหลังสีดำอมน้ำเงินเข้ม */
+  position: relative;
+  overflow: hidden;
+  font-family: 'Prompt', sans-serif; /* แนะนำให้ลงฟอนต์ Prompt ในโปรเจคครับ */
+  color: #f8fafc;
+}
+
+/* ปุ่มกลับหน้าหลัก */
+.home-link {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #94a3b8;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  z-index: 10;
+  background: rgba(30, 41, 59, 0.5);
+  padding: 8px 16px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.home-link:hover {
+  color: #ffffff;
+  background: rgba(30, 41, 59, 0.8);
+  transform: translateY(-2px);
+}
+
+/* แสงออร่าด้านหลัง (Glow Effects) */
+.soft-glow-1, .soft-glow-2 {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: 0;
+  animation: float 8s infinite alternate;
+}
+
+.soft-glow-1 {
+  top: -100px;
+  left: -150px;
+  background: rgba(168, 85, 247, 0.15); /* สีม่วง */
+}
+
+.soft-glow-2 {
+  bottom: -150px;
+  right: -100px;
+  background: rgba(59, 130, 246, 0.1); /* สีน้ำเงิน */
+  animation-delay: 2s;
+}
+
+/* กล่องการ์ดตรงกลาง (Glassmorphism) */
+.clean-card {
+  background: rgba(30, 41, 59, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 40px;
+  width: 100%;
+  max-width: 480px;
+  z-index: 1;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* ส่วนหัวข้อ */
+.clean-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.clean-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(to right, #ffffff, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* จัดกลุ่มช่องกรอกข้อมูล */
+.clean-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.clean-input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  font-weight: 500;
+}
+
+/* ช่องกรอกข้อมูล + ไอคอน */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  color: #64748b;
+  transition: color 0.3s;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 14px 14px 14px 44px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.input-wrapper input::placeholder {
+  color: #475569;
+}
+
+/* เอฟเฟกต์ตอนคลิกช่องกรอกข้อมูล */
+.input-wrapper input:focus {
+  outline: none;
+  border-color: #a855f7;
+  background: rgba(15, 23, 42, 0.8);
+  box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.15);
+}
+
+.input-wrapper input:focus + .input-icon,
+.input-wrapper input:focus ~ .input-icon {
+  color: #a855f7; /* เปลี่ยนสีไอคอนเป็นสีม่วงตอนพิมพ์ */
+}
+
+/* ปุ่มกดสมัครสมาชิก */
+.clean-btn-primary {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 10px;
+  font-family: inherit;
+}
+
+.clean-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(168, 85, 247, 0.4);
+}
+
+.clean-btn-primary:active {
+  transform: translateY(0);
+}
+
+/* ส่วน Footer ด้านล่างสุด */
+.clean-footer {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #94a3b8;
+}
+
+.clean-footer a {
+  text-decoration: none;
+  font-weight: 600;
+  transition: text-shadow 0.3s;
+}
+
+.clean-footer a:hover {
+  text-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
+}
+
+/* อนิเมชั่นฉากหลังลอยไปมาเบาๆ */
+@keyframes float {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(20px, -20px); }
+}

@@ -1,0 +1,91 @@
+/* สไตล์ฟอร์มแบบ Minimal (ใช้กับ Profile และ Address) */
+.form-wrapper {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 40px;
+  background: #ffffff;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.form-header h2 {
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.form-header p {
+  color: #777;
+  font-size: 0.95rem;
+}
+
+.minimal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px; /* ระยะห่างระหว่างช่องกรอก ทำให้ดูไม่อึดอัด */
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.minimal-form input,
+.minimal-form textarea,
+.minimal-form select {
+  padding: 14px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background-color: #fafafa;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+/* เอฟเฟกต์ตอนกดพิมพ์ จะเปลี่ยนเป็นสีขาว ขอบดำ ดูแพง */
+.minimal-form input:focus,
+.minimal-form textarea:focus,
+.minimal-form select:focus {
+  background-color: #ffffff;
+  border-color: #000000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.form-row .input-group {
+  flex: 1; /* แบ่งครึ่งซ้ายขวาเท่าๆ กัน */
+}
+
+.btn-submit-black {
+  margin-top: 20px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 30px; /* ปุ่มโค้งมน */
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-submit-black:hover {
+  background-color: #333;
+}
