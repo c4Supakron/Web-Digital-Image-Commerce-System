@@ -30,14 +30,20 @@ const LoginPage: React.FC = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // ถ้าเข้าสู่ระบบสำเร็จ!
-        // เก็บข้อมูล User (ชื่อ, อีเมล, สิทธิ์) ไว้ในเครื่อง (localStorage) เพื่อเอาไปใช้หน้าอื่น
-        localStorage.setItem('user', JSON.stringify(data.user));
+        // เก็บข้อมูล User (ชื่อ, อีเมล, สิทธิ์) ไว้ในเครื่อง
+        localStorage.setItem('user', JSON.stringify(data));
         
-        alert('✅ ' + data.message);
-        navigate('/'); // เด้งไปหน้าแรก
+        alert('✅ เข้าสู่ระบบสำเร็จ!');
+
+        // 🌟 เพิ่มโค้ดส่วนนี้: เช็ค Role เพื่อเด้งไปหน้าที่ถูกต้อง
+        if (data.role === 'admin' || data.role === 'ADMIN') {
+          navigate('/admin'); // ถ้าเป็นแอดมิน ไปหน้าแดชบอร์ดแอดมิน
+        } else if (data.role === 'ARTIST') {
+          navigate('/artist-dashboard'); // ถ้าเป็นศิลปิน ไปหน้าจัดการผลงาน
+        } else {
+          navigate('/'); // ถ้าเป็นลูกค้า (MEMBER) กลับไปหน้าแรกเพื่อเลือกซื้อของ
+        }
       } else {
-        // ถ้ารหัสผิด หรือไม่มีอีเมลนี้ ให้โชว์ Error
         setErrorMessage(data.message || 'เข้าสู่ระบบไม่สำเร็จ');
       }
 

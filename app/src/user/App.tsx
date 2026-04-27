@@ -10,7 +10,8 @@ import ProfilePage from './profile.tsx';
 import ProductDetailPage from './product-detail.tsx';
 import CardPage from './card.tsx';
 import RegisterArtistPage from './register.artist';
-
+import AdminDashboard from '../admin/admin-dashboard.tsx';
+import ArtistDashboard from '../artist/artist-dashboard.tsx';
 
 function App() {
   return (
@@ -38,6 +39,10 @@ function App() {
         <Route path="/card" element={<CardPage />} />
 
         <Route path="/register.artist" element={<RegisterArtistPage />} />
+
+        <Route path="/admin" element={<AdminDashboard />} />
+        
+        <Route path="/artist-dashboard" element={<ArtistDashboard />} />
       </Routes>
     </BrowserRouter>
   );
