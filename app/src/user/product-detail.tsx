@@ -1,113 +1,97 @@
-import React, { useState } from 'react';
-import './product-detail.css'; // สร้างไฟล์นี้ด้วยนะครับ
-import { Heart, ShoppingBag, Star, ArrowLeft, Share2, User } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import './product-detail.css';
+import { Heart, ShoppingBag, Star, ArrowLeft, Share2, User, ClipboardList } from 'lucide-react';
+import { Link, useParams } from 'react-router-dom';
+import { addCartItem, addFavorite, getProductReviews, getProducts, submitProductReview, type Product, type ProductReviewsData } from '../api';
+import ArtworkImage from './ArtworkImage';
 
 const ProductDetailPage: React.FC = () => {
+  const { productId } = useParams();
+  const [product, setProduct] = useState<Product | null>(null);
+  const [reviews, setReviews] = useState<ProductReviewsData | null>(null);
   const [rating, setRating] = useState(5);
+  const [comment, setComment] = useState('');
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [savingReview, setSavingReview] = useState(false);
 
-  return (
-    <div className="clean-page">
-      
-      {/* NAVBAR แบบย่อ */}
-      <nav className="clean-navbar">
-        <div className="nav-left">
-          <Link to="/shop" className="back-link"><ArrowLeft size={20} /> กลับไปหน้าแกลเลอรี</Link>
+  const refreshReviews = async (id: number) => setReviews(await getProductReviews(id));
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    getProducts().then(async (products) => {
+      const selected = productId ? products.find((item) => item.id === Number(productId)) : products[0];
+      if (!selected) throw new Error('ไม่พบผลงานนี้');
+      if (cancelled) return;
+      setProduct(selected);
+      try {
+        const data = await getProductReviews(selected.id);
+        if (!cancelled) {
+          setReviews(data);
+          if (data.myReview) { setRating(data.myReview.rating); setComment(data.myReview.comment); }
+        }
+      } catch (error) { if (!cancelled) setMessage(error instanceof Error ? error.message : 'โหลดรีวิวไม่สำเร็จ'); }
+    }).catch((error: unknown) => { if (!cancelled) setMessage(error instanceof Error ? error.message : 'โหลดผลงานไม่สำเร็จ'); })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, [productId]);
+
+  const handleReview = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!product) return;
+    setSavingReview(true); setMessage('');
+    try {
+      await submitProductReview(product.id, { rating, comment });
+      await refreshReviews(product.id);
+      setMessage('บันทึกคะแนนและรีวิวแล้ว');
+    } catch (error) { setMessage(error instanceof Error ? error.message : 'บันทึกรีวิวไม่สำเร็จ'); }
+    finally { setSavingReview(false); }
+  };
+
+  if (loading) return <main className="product-container"><p role="status">กำลังโหลดผลงาน...</p></main>;
+  if (!product) return <main className="product-container"><p role="alert">{message || 'ไม่พบผลงานนี้'}</p><Link to="/shop">กลับไปแกลเลอรี</Link></main>;
+
+  return <div className="clean-page">
+    <nav className="clean-navbar">
+      <div className="nav-left"><Link to="/shop" className="back-link"><ArrowLeft size={20} /> กลับไปหน้าแกลเลอรี</Link></div>
+      <Link to="/" className="brand-logo">V-ART</Link>
+      <div className="nav-icons"><Link to="/orders" aria-label="ประวัติการสั่งซื้อ" title="ประวัติการสั่งซื้อ"><ClipboardList size={22} /></Link><Link to="/cart" aria-label="ตะกร้าสินค้า"><ShoppingBag size={22} /></Link><Link to={localStorage.getItem('user') ? '/profile' : '/login'} aria-label="โปรไฟล์"><User size={22} /></Link></div>
+    </nav>
+
+    <main className="product-container">
+      <div className="product-image-section"><ArtworkImage src={product.image} alt={product.title} className="main-image" /></div>
+      <div className="product-info-section">
+        <div className="artist-info"><div className="artist-avatar" /><span>โดย <strong>{product.artist}</strong></span></div>
+        <h1 className="product-title">{product.title}</h1>
+        <p className="product-price">{new Intl.NumberFormat('th-TH').format(product.price)} บาท</p>
+        <div className="product-stats"><span className="rating"><Star size={16} fill="#000" /> {reviews?.reviewCount ? reviews.averageRating.toFixed(1) : 'ยังไม่มีคะแนน'} ({reviews?.reviewCount || 0} รีวิว)</span><span className="dot">•</span><span>{product.category}</span></div>
+        <p className="product-desc">{product.description || 'ยังไม่มีคำอธิบายผลงาน'}</p>
+        <div className="product-actions">
+          <button className="btn-add-to-cart" onClick={() => addCartItem(product.id).then(() => setMessage('เพิ่มลงตะกร้าแล้ว')).catch((error) => setMessage(error.message))}><ShoppingBag size={20} /> เพิ่มลงตะกร้า</button>
+          <button className="btn-wishlist" aria-label="บันทึกรายการโปรด" onClick={() => addFavorite(product.id).then(() => setMessage('บันทึกรายการโปรดแล้ว')).catch((error) => setMessage(error.message))}><Heart size={20} /></button>
+          <button className="btn-wishlist" aria-label="แชร์ผลงาน" onClick={() => navigator.clipboard?.writeText(window.location.href).then(() => setMessage('คัดลอกลิงก์ผลงานแล้ว')).catch(() => setMessage('คัดลอกลิงก์ไม่สำเร็จ'))}><Share2 size={20} /></button>
         </div>
-        <Link to="/" className="brand-logo">V-ART</Link>
-        <div className="nav-icons">
-          <Link to="/cart"><ShoppingBag size={22} /></Link>
-          <Link to="/profile"><User size={22} /></Link>
+        {message && <p role="status">{message}</p>}
+      </div>
+    </main>
+
+    <section className="reviews-section">
+      <h2>รีวิวจากผู้ซื้อ ({reviews?.reviewCount || 0})</h2>
+      {reviews?.canReview ? <form className="write-review-box" onSubmit={handleReview}>
+        <h3>{reviews.myReview ? 'แก้ไขคะแนนและรีวิวของคุณ' : 'ให้คะแนนผลงานที่ได้รับแล้ว'}</h3>
+        <div className="star-rating-input" role="group" aria-label="เลือกคะแนน 1 ถึง 5 ดาว">
+          {[1, 2, 3, 4, 5].map((value) => <button key={value} type="button" aria-label={`${value} ดาว`} aria-pressed={rating === value} onClick={() => setRating(value)} style={{ border: 0, background: 'transparent', padding: 2, cursor: 'pointer' }}><Star size={24} className={value <= rating ? 'star-active' : 'star-inactive'} /></button>)}
         </div>
-      </nav>
-
-      {/* ส่วนเนื้อหาหลัก */}
-      <main className="product-container">
-        
-        {/* ฝั่งซ้าย: รูปภาพขนาดใหญ่ */}
-        <div className="product-image-section">
-          <img src="https://images.unsplash.com/photo-1549887534-1541e9326642?w=800" alt="Abstract Horizon" className="main-image" />
-        </div>
-
-        {/* ฝั่งขวา: ข้อมูลภาพวาดและการสั่งซื้อ */}
-        <div className="product-info-section">
-          <div className="artist-info">
-            <div className="artist-avatar"></div>
-            <span>โดย <strong>ศุภกร หวันลา</strong></span>
-          </div>
-
-          <h1 className="product-title">Abstract Horizon #4</h1>
-          <p className="product-price">12,500 THB</p>
-
-          <div className="product-stats">
-            <span className="rating"><Star size={16} fill="#000" /> 4.8 (12 รีวิว)</span>
-            <span className="dot">•</span>
-            <span>ขายแล้ว 3 ชิ้น</span>
-          </div>
-
-          <p className="product-desc">
-            ผลงานศิลปะแนวนามธรรมที่สื่อถึงขอบฟ้าในยามเช้า ใช้เทคนิคสีอะคริลิกบนแคนวาส 
-            เหมาะสำหรับการตกแต่งห้องนั่งเล่นหรือพื้นที่ที่ต้องการความสงบและมีพลัง
-          </p>
-
-          <div className="product-details-list">
-            <p><strong>ขนาด:</strong> 80 x 120 ซม.</p>
-            <p><strong>เทคนิค:</strong> สีอะคริลิก (Acrylic on Canvas)</p>
-            <p><strong>ปีที่สร้าง:</strong> 2024</p>
-          </div>
-
-          <div className="product-actions">
-            <button className="btn-add-to-cart">
-              <ShoppingBag size={20} /> เพิ่มลงตะกร้า
-            </button>
-            <button className="btn-wishlist">
-              <Heart size={20} />
-            </button>
-            <button className="btn-wishlist">
-              <Share2 size={20} />
-            </button>
-          </div>
-        </div>
-      </main>
-
-      {/* ส่วนรีวิวและให้คะแนนดาว */}
-      <section className="reviews-section">
-        <h2>รีวิวจากผู้ซื้อ (12)</h2>
-        
-        {/* ฟอร์มเขียนรีวิว */}
-        <div className="write-review-box">
-          <h3>เขียนรีวิวของคุณ</h3>
-          <div className="star-rating-input">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <Star 
-                key={star} 
-                size={24} 
-                className={star <= rating ? "star-active" : "star-inactive"} 
-                onClick={() => setRating(star)}
-              />
-            ))}
-          </div>
-          <textarea placeholder="แบ่งปันความประทับใจเกี่ยวกับผลงานชิ้นนี้..." rows={3}></textarea>
-          <button className="btn-submit-review">ส่งรีวิว</button>
-        </div>
-
-        {/* รายการรีวิว */}
-        <div className="review-list">
-          <div className="review-card">
-            <div className="review-header">
-              <div className="reviewer-name">ชิษณุกร ม.</div>
-              <div className="review-stars">
-                <Star size={14} fill="#000" /><Star size={14} fill="#000" /><Star size={14} fill="#000" /><Star size={14} fill="#000" /><Star size={14} fill="#000" />
-              </div>
-            </div>
-            <p className="review-text">ภาพสวยมากครับ สีสดกว่าในรูป การแพ็คของจัดส่งจากศิลปินทำได้ดีเยี่ยม ปลอดภัยไร้รอยขีดข่วน</p>
-            <span className="review-date">12 มี.ค. 2024</span>
-          </div>
-        </div>
-      </section>
-
-    </div>
-  );
+        <textarea aria-label="ข้อความรีวิว" value={comment} onChange={(event) => setComment(event.target.value)} maxLength={1000} placeholder="แบ่งปันความประทับใจเกี่ยวกับผลงานชิ้นนี้..." rows={3} />
+        <button className="btn-submit-review" type="submit" disabled={savingReview}>{savingReview ? 'กำลังบันทึก...' : 'ส่งรีวิว'}</button>
+      </form> : <p className="write-review-box">เขียนรีวิวได้เมื่อมีคำสั่งซื้อผลงานนี้ที่จัดส่งแล้ว {localStorage.getItem('user') ? '' : <><Link to="/login">เข้าสู่ระบบ</Link> เพื่อดูสิทธิ์การรีวิว</>}</p>}
+      {reviews?.reviews.length ? <div className="review-list">{reviews.reviews.map((review) => <article className="review-card" key={review.id}>
+        <div className="review-header"><div className="reviewer-name">{review.reviewer_name} · ผู้ซื้อที่ได้รับสินค้าแล้ว</div><div className="review-stars">{Array.from({ length: 5 }, (_, index) => <Star key={index} size={14} fill={index < review.rating ? '#000' : 'none'} color={index < review.rating ? '#000' : '#ccc'} />)}</div></div>
+        {review.comment && <p className="review-text">{review.comment}</p>}<span className="review-date">{new Date(review.created_at).toLocaleDateString('th-TH')}</span>
+      </article>)}</div> : <p>ยังไม่มีรีวิวสำหรับผลงานนี้</p>}
+    </section>
+  </div>;
 };
 
 export default ProductDetailPage;

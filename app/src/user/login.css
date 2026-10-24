@@ -157,6 +157,13 @@ html, body, #root {
     text-decoration: none;
     font-weight: 500;
 }
+.password-help {
+    max-width: 48%;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.4;
+    text-align: right;
+}
 
 /* Checkbox Container: ใช้ Flex จัดให้ตรงกัน */
 .checkbox-container {
