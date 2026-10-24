@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './login.css'
-import { ArrowRight, Mail, Lock, Chrome, Facebook, Home } from 'lucide-react';
+import { ArrowRight, Mail, Lock, Chrome, Home } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { loginUser } from '../mockData.ts';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -9,47 +10,40 @@ const LoginPage: React.FC = () => {
   // 1. สร้าง State เก็บค่าอีเมล รหัสผ่าน และข้อความ Error
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const handleGoogleLogin = () => {
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+    window.location.assign(`${apiBaseUrl.replace(/\/$/, '')}/api/auth/google`);
+  };
 
   // 2. ฟังก์ชันหลักที่จะทำงานตอนกดปุ่ม "เข้าสู่ระบบ"
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(''); // เคลียร์ข้อความ Error เก่า
 
-    try {
-      // ส่งข้อมูลไปถามหลังบ้านว่า อีเมลและรหัสผ่านนี้มีจริงไหม?
-      const response = await fetch('http://localhost:5000/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: email,
-          password: password
-        })
-      });
+    const result = await loginUser(email, password, rememberMe);
 
-      const data = await response.json();
+    if (result.ok && result.user) {
+      // เก็บข้อมูล User (ชื่อ, อีเมล, สิทธิ์) ไว้ในเครื่อง
+      localStorage.setItem('user', JSON.stringify(result.user));
 
-      if (response.ok) {
-        // เก็บข้อมูล User (ชื่อ, อีเมล, สิทธิ์) ไว้ในเครื่อง
-        localStorage.setItem('user', JSON.stringify(data));
-        
-        alert('✅ เข้าสู่ระบบสำเร็จ!');
+      alert(result.message || '✅ เข้าสู่ระบบสำเร็จ!');
 
-        // 🌟 เพิ่มโค้ดส่วนนี้: เช็ค Role เพื่อเด้งไปหน้าที่ถูกต้อง
-        if (data.role === 'admin' || data.role === 'ADMIN') {
-          navigate('/admin'); // ถ้าเป็นแอดมิน ไปหน้าแดชบอร์ดแอดมิน
-        } else if (data.role === 'ARTIST') {
-          navigate('/artist-dashboard'); // ถ้าเป็นศิลปิน ไปหน้าจัดการผลงาน
-        } else {
-          navigate('/'); // ถ้าเป็นลูกค้า (MEMBER) กลับไปหน้าแรกเพื่อเลือกซื้อของ
-        }
+      // 🌟 เช็ค Role เพื่อเด้งไปหน้าที่ถูกต้อง
+      const role = result.user.role?.toUpperCase();
+      if (role === 'ADMIN') {
+        navigate('/admin'); // ถ้าเป็นแอดมิน ไปหน้าแดชบอร์ดแอดมิน
+      } else if (role === 'ARTIST') {
+        navigate('/artist-dashboard'); // ถ้าเป็นศิลปิน ไปหน้าจัดการผลงาน
+      } else if (result.user.artist_status === 'PENDING' || result.user.artist_status === 'REJECTED') {
+        navigate('/artist-dashboard');
       } else {
-        setErrorMessage(data.message || 'เข้าสู่ระบบไม่สำเร็จ');
+        navigate('/'); // ถ้าเป็นลูกค้า (MEMBER) กลับไปหน้าแรกเพื่อเลือกซื้อของ
       }
-
-    } catch (error) {
-      console.error('Error:', error);
-      setErrorMessage('ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้ (เช็คว่ารันหลังบ้านหรือยัง)');
+    } else {
+      setErrorMessage(result.message || 'เข้าสู่ระบบไม่สำเร็จ');
     }
   };
 
@@ -111,12 +105,11 @@ const LoginPage: React.FC = () => {
 
           <div className="clean-options">
             <label className="checkbox-container">
-              <input type="checkbox" />
+              <input type="checkbox" checked={rememberMe} onChange={(event) => setRememberMe(event.target.checked)} />
               <span className="custom-checkmark"></span>
-              <span className="checkbox-text">จดจำการเข้าสู่ระบบ</span>
+              <span className="checkbox-text">จดจำการเข้าสู่ระบบ 7 วัน</span>
             </label>
-            
-            <a href="/forgot-password">ลืมรหัสผ่าน?</a>
+            <span className="password-help">ลืมรหัสผ่าน? ติดต่อผู้ดูแลระบบ</span>
           </div>
 
           <button type="submit" className="clean-btn-primary">
@@ -127,13 +120,13 @@ const LoginPage: React.FC = () => {
         <div className="clean-divider"><span>หรือ</span></div>
 
         <div className="social-buttons">
-          <button type="button" className="social-btn">
+          <button type="button" className="social-btn" onClick={handleGoogleLogin}>
             <Chrome size={20} className="google-icon" /> Google
           </button>
-          <button type="button" className="social-btn">
-            <Facebook size={20} className="fb-icon" /> Facebook
-          </button>
         </div>
+        <p className="password-help" style={{ textAlign: 'center', marginTop: '10px' }}>
+          ผู้ใช้ใหม่ต้องสมัครสมาชิกก่อน และใช้ Google ด้วยอีเมลเดียวกัน
+        </p>
 
         <p className="clean-footer">
           ยังไม่มีบัญชีผู้ใช้? <Link to="/register">สมัครสมาชิกฟรี</Link>

@@ -98,6 +98,7 @@
   margin-top: 20px;
   display: flex;
   justify-content: flex-end;
+  gap: 12px;
 }
 
 .btn-save {
@@ -114,6 +115,36 @@
 
 .btn-save:hover {
   background-color: #333;
+}
+
+.btn-logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border: 1px solid #dc2626;
+  border-radius: 30px;
+  background: #fff;
+  color: #b91c1c;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-logout:hover:not(:disabled) {
+  background: #fef2f2;
+}
+
+.btn-logout:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.logout-error {
+  margin: -16px 0 0;
+  color: #b91c1c;
+  text-align: right;
 }
 
 /* =========================================

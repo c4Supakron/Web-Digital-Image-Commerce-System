@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="ภาพตัวอย่างผลงาน V-ART">
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5e9dc"/>
+      <stop offset="1" stop-color="#d7e4df"/>
+    </linearGradient>
+    <linearGradient id="paint" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#252d44"/>
+      <stop offset=".55" stop-color="#83739c"/>
+      <stop offset="1" stop-color="#e6a56d"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="#f7f5f1"/>
+  <rect x="54" y="54" width="692" height="892" rx="18" fill="url(#paper)"/>
+  <path d="M95 650c120-130 190-68 270-190 78-118 138-94 224-204 48 94 88 200 112 394H95z" fill="url(#paint)"/>
+  <circle cx="540" cy="300" r="92" fill="#f4cf9c" opacity=".9"/>
+  <path d="M95 710c115-84 180-35 274-132 105-108 188-42 332-150v314H95z" fill="#314d55" opacity=".8"/>
+  <text x="400" y="840" text-anchor="middle" fill="#24303c" font-family="Arial,sans-serif" font-size="34" letter-spacing="9">V-ART</text>
+  <text x="400" y="887" text-anchor="middle" fill="#58616a" font-family="Arial,sans-serif" font-size="18" letter-spacing="3">ARTWORK PREVIEW</text>
+</svg>

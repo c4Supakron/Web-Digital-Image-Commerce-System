@@ -1,0 +1,27 @@
+{
+  "name": "vart-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "db:setup": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/setup-postgres.ps1",
+    "db:start": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/start-postgres.ps1",
+    "db:stop": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/stop-postgres.ps1",
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "connect-pg-simple": "^10.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "multer": "^2.4.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "pg": "^8.16.3",
+    "promptpay-qr": "^0.5.0",
+    "qrcode": "^1.5.4"
+  }
+}

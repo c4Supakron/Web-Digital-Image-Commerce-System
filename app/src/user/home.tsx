@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './home.css';
-import { Menu, Search, Heart, ShoppingBag, User, X } from 'lucide-react';
+import { Menu, Search, Heart, ShoppingBag, User, X, ClipboardList } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { addCartItem, addFavorite, getProducts, type Product } from '../api';
+import ArtworkImage from './ArtworkImage';
 
 const HomePage: React.FC = () => {
   // สร้าง State สำหรับเปิด/ปิดแถบเมนูด้านซ้าย
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // ข้อมูลจำลอง (เน้นรูปภาพเด่นๆ)
-  const featuredArts = [
-    { id: 1, title: 'Abstract Horizon', price: '12,500', img: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=600' },
-    { id: 2, title: 'Urban Geometry', price: '8,900', img: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600' },
-    { id: 3, title: 'Silent Valley', price: '15,000', img: 'https://images.unsplash.com/photo-1506744626753-1fa44df14c28?w=600' },
-  ];
+  const [featuredArts, setFeaturedArts] = useState<Product[]>([]);
+  const [message, setMessage] = useState('');
+  useEffect(() => { getProducts().then(setFeaturedArts).catch((error) => setMessage(error.message)); }, []);
+
+  const galleryGroups = featuredArts.length > 1 ? [0, 1] : [0];
 
   return (
     <div className="clean-page">
@@ -35,8 +36,9 @@ const HomePage: React.FC = () => {
         <div className="nav-icons">
   <Link to="/shop"><Search size={22} /></Link>
   <Link to="/favorites"><Heart size={22} /></Link> {/* หัวใจ -> ไปหน้ารายการโปรด */}
+  <Link to="/orders" aria-label="ประวัติการสั่งซื้อ" title="ประวัติการสั่งซื้อ"><ClipboardList size={22} /></Link>
   <Link to="/cart"><ShoppingBag size={22} /></Link>
-  <Link to="/login"><User size={22} /></Link> {/* รูปคน -> ไปหน้าโปรไฟล์ */}
+  <Link to={localStorage.getItem('user') ? '/profile' : '/login'} aria-label={localStorage.getItem('user') ? 'โปรไฟล์' : 'เข้าสู่ระบบ'}><User size={22} /></Link>
 </div>
       </nav>
 
@@ -47,53 +49,72 @@ const HomePage: React.FC = () => {
           <X size={28} />
         </button>
         <ul className="sidebar-menu">
-          <li><Link to="/">HOME</Link></li>
-          <li><Link to="/shop">SHOP</Link></li>
-          <li><Link to="/profile">PROFILE</Link></li>
-          <li><Link to="/address">ADDRESS</Link></li>
-          <li><Link to="/orders">ORDER HISTORY</Link></li>
+          <li><Link to="/">หน้าหลัก</Link></li>
+          <li><Link to="/shop">แกลเลอรี</Link></li>
+          <li><Link to="/profile">ข้อมูลส่วนตัว</Link></li>
+          <li><Link to="/address">ที่อยู่จัดส่ง</Link></li>
+          <li><Link to="/orders">ประวัติการสั่งซื้อ</Link></li>
           <li className="special-menu" style={{ marginTop: '20px' }}>
-            <Link to="/register.artist">JOIN AS AN ARTIST</Link>
+            <Link to="/register.artist">สมัครเป็นศิลปิน</Link>
           </li>
         </ul>
       </div>
 
       {/* 3. HERO SECTION (แบนเนอร์รูปใหญ่) */}
       <header className="hero-section">
+        <div className="hero-arch" aria-hidden="true"><span className="hero-sun" /></div>
         <div className="hero-content">
-          <h1>Discover Digital Art</h1>
-          <p>Explore unique collections from independent artists.</p>
-          <Link to="/shop" className="btn-explore">Explore Gallery</Link>
+          <span className="hero-kicker">V — ART · คลังศิลป์เหนือกาลเวลา</span>
+          <h1>ค้นพบงานศิลปะดิจิทัล</h1>
+          <p>แรงบันดาลใจจากอารยธรรมตะวันออก สู่คอลเลกชันศิลปะร่วมสมัย</p>
+          <Link to="/shop" className="btn-explore">เลือกชมแกลเลอรี</Link>
         </div>
+        <span className="hero-caption" aria-hidden="true">ศิลปะ · เรื่องเล่า · อารยธรรม</span>
       </header>
 
       {/* 4. FEATURED ARTWORKS (รูปผลงานแนะนำ) */}
       <section className="featured-section">
-        <h2 className="section-title">Featured Artworks</h2>
-        <div className="art-gallery">
-          {featuredArts.map((art) => (
-            <div key={art.id} className="art-item">
-              <div className="art-image-box">
-                <img src={art.img} alt={art.title} />
-                
-                {/* ปุ่ม Overlay จะโชว์ตอนเอาเมาส์ไปชี้ */}
-                <div className="art-overlay">
-                  <button className="btn-icon"><Heart size={20} /></button>
-                  <button className="btn-add-cart">Add to Cart</button>
-                </div>
-              </div>
-              <div className="art-text">
-                <h3>{art.title}</h3>
-                <p>฿{art.price}</p>
-              </div>
+        {featuredArts.length >= 2 && (
+          <>
+            <div className="side-artwork side-artwork-left" aria-hidden="true">
+              <ArtworkImage src={featuredArts[1].image} alt="" />
             </div>
-          ))}
+            <div className="side-artwork side-artwork-right" aria-hidden="true">
+              <ArtworkImage src={featuredArts[0].image} alt="" />
+            </div>
+          </>
+        )}
+        <p className="section-eyebrow">คัดสรรเพื่อคุณ</p>
+        <h2 className="section-title">ผลงานแนะนำ</h2>
+        {message && <p role="alert">{message}</p>}
+        <div className="art-gallery" role="region" aria-label="ผลงานแนะนำ">
+          <div className="art-gallery-track" style={{ animationDuration: `${Math.max(18, featuredArts.length * 7)}s` }}>
+            {galleryGroups.map((groupIndex) => (
+              <div className="art-gallery-group" key={groupIndex}>
+                {featuredArts.map((art) => (
+                  <div key={`${art.id}-${groupIndex}`} className="art-item">
+                    <div className="art-image-box">
+                      <Link to={`/product/${art.id}`}><ArtworkImage src={art.image} alt={art.title} /></Link>
+                      <div className="art-overlay">
+                        <button className="btn-icon" aria-label="บันทึกรายการโปรด" onClick={() => addFavorite(art.id).then(() => setMessage('บันทึกรายการโปรดแล้ว')).catch((error) => setMessage(error.message))}><Heart size={20} /></button>
+                        <button className="btn-add-cart" onClick={() => addCartItem(art.id).then(() => setMessage('เพิ่มลงตะกร้าแล้ว')).catch((error) => setMessage(error.message))}>เพิ่มลงตะกร้า</button>
+                      </div>
+                    </div>
+                    <div className="art-text">
+                      <h3>{art.title}</h3>
+                      <p>฿{new Intl.NumberFormat('th-TH').format(art.price)}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* 5. FOOTER */}
       <footer className="simple-footer">
-        <p>&copy; 2025 V-ART Gallery. All rights reserved.</p>
+        <p>&copy; 2025 V-ART แกลเลอรี สงวนลิขสิทธิ์</p>
       </footer>
 
     </div>

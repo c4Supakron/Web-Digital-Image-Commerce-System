@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './register.css';
-import { User, Mail, Lock, ArrowRight, Chrome, Facebook } from 'lucide-react';
+import { User, Mail, Lock, ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { registerUser } from '../mockData.ts';
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
@@ -26,30 +27,13 @@ const RegisterPage: React.FC = () => {
       return;
     }
 
-    try {
-      // ยิงข้อมูลไปหาหลังบ้านที่ Port 5000
-      const response = await fetch('http://localhost:5000/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: username,
-          email: email,
-          password: password
-        })
-      });
+    const result = await registerUser(username, email, password, 'MEMBER');
 
-      const data = await response.json();
-
-      if (response.ok) {
-        alert('🎉 สมัครสมาชิกสำเร็จ! กรุณาเข้าสู่ระบบ');
-        navigate('/login'); // เด้งไปหน้าเข้าสู่ระบบอัตโนมัติ
-      } else {
-        setErrorMessage(data.message || 'เกิดข้อผิดพลาดในการสมัครสมาชิก');
-      }
-
-    } catch (error) {
-      console.error('Error:', error);
-      setErrorMessage('ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้ (เช็คว่ารันหลังบ้านหรือยัง)');
+    if (result.ok) {
+      alert(result.message || '🎉 สมัครสมาชิกสำเร็จ! กรุณาเข้าสู่ระบบ');
+      navigate('/login'); // เด้งไปหน้าเข้าสู่ระบบอัตโนมัติ
+    } else {
+      setErrorMessage(result.message || 'เกิดข้อผิดพลาดในการสมัครสมาชิก');
     }
   };
 
@@ -76,7 +60,7 @@ const RegisterPage: React.FC = () => {
           
           {/* Username */}
           <div className="clean-input-group">
-            <label htmlFor="username">ชื่อผู้ใช้งาน (Username)</label>
+          <label htmlFor="username">ชื่อผู้ใช้งาน</label>
             <div className="input-wrapper">
                 <User size={18} className="input-icon" />
                 <input 
@@ -152,18 +136,8 @@ const RegisterPage: React.FC = () => {
           </button>
         </form>
 
-        <div className="clean-divider"><span>หรือ</span></div>
-
-        <div className="social-buttons">
-          <button type="button" className="social-btn">
-            <Chrome size={20} className="google-icon" /> Google
-          </button>
-          <button type="button" className="social-btn">
-            <Facebook size={20} className="fb-icon" /> Facebook
-          </button>
-        </div>
-
         <p className="clean-footer">
+          สมัครเสร็จแล้วจึงเข้าสู่ระบบ หรือเลือก Google โดยใช้อีเมลเดียวกัน<br />
           มีบัญชีผู้ใช้อยู่แล้ว? <Link to="/login">เข้าสู่ระบบ</Link>
         </p>
       </div>
